@@ -32,7 +32,7 @@ class heap():
     def percolate_down(self):
         if len(self.list) == 2:
             if self.list[0] > self.list[1]:
-                self.list[0], self.list[1] = self.list[1], self.list[0]
+                self.list = swap(self.list, 0, 1)
 
         index = 0
         while 2*index + 2 < len(self.list):
