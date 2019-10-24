@@ -36,12 +36,15 @@ class heap():
 
         index = 0
         while 2*index + 2 < len(self.list):
-            if self.list[index] > min(self.list[2*index + 1], self.list[2*index + 2]):
-                if self.list[2*index + 1] < self.list[2*index + 2]:
-                    swap(self.list, index, 2*index +1)
+            child_left = self.list[2*index +1]
+            child_right = self.right[2*index + 2]
+            
+            if self.list[index] > min(child_left, child_right):
+                if child_left < child_right:
+                    swap(self.list, index, child_left)
                     index = 2*index + 1
                 else:
-                    swap(self.list, index, 2*index + 2)
+                    swap(self.list, index, child_right)
                     index = 2*index + 2
 
     def pop_min(self):
@@ -55,13 +58,14 @@ class heap():
         根にもってくるために値を代入　list[0] = pop(-1)
         pop(0)で根をとるとリストのindexがずれてヒープの形状が崩れるため、根をとるときは[0]
         list[0]は削除だから、pop(-1)で得た必ず子になる要素を入れて形を整える
-        insertの時に使ったヒープ化処理(percolate_down)を実行する
+        insertの時に使ったヒープ化処理と異なり、逆からたどる処理percolate_downを実行しヒープ性（heapify）を維持する
         """
         self.percolate_down()
 
         return res
 
     def sort(self):
+        """ヒープソートを実装する"""
         temp_list = self.list
         return [self.pop_min() for _ in range(len(temp_list))]
 
@@ -84,11 +88,5 @@ print('heap sort', my_heap.sort())
 my_list = [random.randint(1,100) for _ in range(6)]
 my_heap = heap(my_list)
 #%%
-%%timeit
 my_heap.sort()
 
-#%%
-%%timeit
-sorted(my_list)
-
-#%%
