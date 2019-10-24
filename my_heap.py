@@ -1,13 +1,7 @@
-# %%
-import random
-
-
-#%%
 def swap(arr, i , j):
     arr[i], arr[j] = arr[j], arr[i]
     return arr
 
-#%%
 class heap():
     """先頭が一番小さい昇順ヒープの実装"""
 
@@ -35,17 +29,20 @@ class heap():
                 self.list = swap(self.list, 0, 1)
 
         index = 0
-        while 2*index + 2 < len(self.list):
-            child_left = self.list[2*index +1]
-            child_right = self.right[2*index + 2]
-            
+
+        while (2*index + 2 <= len(self.list)-1):
+            child_left_index = 2*index + 1
+            child_right_index = 2*index + 2
+            child_left = self.list[child_left_index]
+            child_right = self.list[child_right_index]
+
             if self.list[index] > min(child_left, child_right):
                 if child_left < child_right:
-                    swap(self.list, index, child_left)
-                    index = 2*index + 1
+                    swap(self.list, index, child_left_index)
+                    index = child_left_index 
                 else:
-                    swap(self.list, index, child_right)
-                    index = 2*index + 2
+                    self.list =swap(self.list, index, child_right_index)
+                    index = child_right_index
 
     def pop_min(self):
         if len(self.list) == 1:
@@ -69,24 +66,17 @@ class heap():
         temp_list = self.list
         return [self.pop_min() for _ in range(len(temp_list))]
 
-#%%
+#######################################
+
 my_list = [3, 1, 88, 15, 2, 61, 17, 2, 2, 18, 21]
 print('my initial list >>>', my_list)
 
 my_heap = heap(my_list)
 print('insert 100 to heap')
 my_heap.insert(100)
-print('heap with 100', my_heap.list)
+print('add 100 to heap >>>', my_heap.list)
 
 res = my_heap.pop_min()
 print('pop_min > ', res)
-
-print('heap sort', my_heap.sort())
-
-
-#%%
-my_list = [random.randint(1,100) for _ in range(6)]
-my_heap = heap(my_list)
-#%%
-my_heap.sort()
+print('heap sort >>>', my_heap.sort())
 
