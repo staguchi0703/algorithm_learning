@@ -28,60 +28,67 @@ class BST:
     #  Tree traversal
     ###############################
     def preoder_traversal(self, node, res):
-        if node == None:
-            return res
-        
-        print('queue', node.data)
-        res.append(node.data)
+        if node != None:
+            print('queue', node.data)
+            res.append(node.data)
 
-        # 前順序で左部分木
-        self.preoder_traversal(node.left, res)
-        # 前順序で右部分木
-        self.preoder_traversal(node.right, res)
+            # 前順序で左部分木
+            self.preoder_traversal(node.left, res)
+            # 前順序で右部分木
+            self.preoder_traversal(node.right, res)
 
+        return res
 
     def inoder_traversal(self, node, res):
-        if node == None:
-            return res
+        if node != None:
+                
+            # 間順序で左部分木
+            self.inoder_traversal(node.left, res)
 
-        # 間順序で左部分木
-        self.inoder_traversal(node.left, res)
-
-        print('queue', node.data)
-        res.append(node.data)
+            print('queue', node.data)
+            res.append(node.data)
 
 
-        # 間順序で右部分木
-        self.inoder_traversal(node.right, res)
-
+            # 間順序で右部分木
+            self.inoder_traversal(node.right, res)
+        return res
 
     def postorder_traversal(self, node, res):
-        if node == None:
-            return res
+        if node != None:
         
-        self.postorder_traversal(node.left, res)
-        self.postorder_traversal(node.right, res)
-        print(node.data)
-        res.append(node.data)
+            self.postorder_traversal(node.left, res)
+            self.postorder_traversal(node.right, res)
+            print(node.data)
+            res.append(node.data)
+        return res
 
+    def level_order_traversal(self, node, res, level = 0):
 
-    def level_order_traversal(self, node, res):
-        print(node.data)
-        res.append(node.data)
+        if node is self.root :
+            # it's root
+            print(node.data)
+            res.append(node.data)
+            level += 1
+            upper_node_list = [self.root]
 
-        if node.left == None:
-            pass
+            if level != 0:
+                raise ValueError('Inital node is geven as root. But level you set isn\'t 0.')
         else:
-            if node.left.data <= node.data:
-                self.level_order_traversal(node.left, res)
-        if node.right == None:
-            pass
-        else:
-            self.level_order_traversal(node.right, res)
+            # ここをどうやって再帰するか考えられていない
+            upper_node_list = []
+            # このlevelのノードを書き出す
+            for item in upper_node_list:
+                print(item.left)
+                res.append(item.left)
+                upper_node_list.append(item.left)
+                print(item.right)
+                res.append(item.right)
+                upper_node_list.append(item.right)
 
+        return res
 
 # 二分木の問題
-class BST_method(BST):
+class BT_method(BST):
     def __init__(self, arr):
         super().__init__(arr)
 
@@ -93,31 +100,26 @@ class BST_method(BST):
 
 
 # BSTクラス内で使用する再帰関数
+# 与えられたの順にノードに追加していく
 def _insert(temp_node, data): #とあるノードに対して左枝と右枝へ条件分岐しながら再帰で進んで、treeの末端に到達したらノードを生成する
-    if data <= temp_node.data: # 左枝
-        if temp_node.left == None: # 末端だったら
-            temp_node.left = Node(data) # ノードを生成
-            print('insert {} to left branch'.format(temp_node.left.data))
-            return
+    if temp_node.left != None:
+        if temp_node.right != None:
+            _insert(temp_node.left, data)
         else:
-            _insert(temp_node.left, data) #ノードが占有されていたら、再帰して（.leftを付け足して）進んでいく
-    else: #上の処理の右枝版
-        if temp_node.right == None:
+            print('inserting to right')
             temp_node.right = Node(data)
-            print('insert {} to right branch'.format(temp_node.right.data))
-            return
-        else:
-            _insert(temp_node.right, data)
+    else:
+        print('inserting to left')
+        temp_node.left = Node(data)
 
 
-
-ins = BST([24,12,3, 5,14,5,16,7,8, 11, 99])
+ins = BST(range(1,16))
 
 
 # TODO 探索の方法を確認して実装する
 print('--------------------------')
 print('start preoder traversal')
-ins.preoder_traversal(ins.root, [])
+print(ins.preoder_traversal(ins.root, []))
 
 print('--------------------------')
 print('start inoder traversal')
