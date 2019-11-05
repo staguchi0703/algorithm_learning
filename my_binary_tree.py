@@ -58,46 +58,73 @@ class BST:
         
             self.postorder_traversal(node.left, res)
             self.postorder_traversal(node.right, res)
-            print(node.data)
+            print('queue', node.data)
             res.append(node.data)
         return res
 
-    def level_order_traversal(self, node, res, level = 0):
+    def level_order_traversal(self, queue, res= []):
 
-        if node is self.root :
+        if queue == [] :
             # it's root
-            print(node.data)
-            res.append(node.data)
-            level += 1
-            upper_node_list = [self.root]
+            print('root', self.root.data)
+            res.append(self.root.data)
+            queue.append(self.root)
 
-            if level != 0:
-                raise ValueError('Inital node is geven as root. But level you set isn\'t 0.')
         else:
-            # ここをどうやって再帰するか考えられていない
-            upper_node_list = []
-            # このlevelのノードを書き出す
-            for item in upper_node_list:
-                print(item.left)
-                res.append(item.left)
-                upper_node_list.append(item.left)
-                print(item.right)
-                res.append(item.right)
-                upper_node_list.append(item.right)
+            # このlevelのノード は引数のqueueだからforで回す
+            temp_list, queue = queue, []
+            not_none_cnt = 0
+
+            for item in temp_list:
+                if item.left is not None:
+                    res.append(item.left.data)
+                    print(item.left.data)
+                    queue.append(item.left)
+                    not_none_cnt += 1
+
+                if item.right is not None:
+                    res.append(item.right.data)
+                    print(item.right.data)
+                    queue.append(item.right)
+                    not_none_cnt += 1
+            
+            if not_none_cnt == 0:
+                return #最後にこの関数を呼び出したところに戻る
+            
+        self.level_order_traversal(queue, res)
 
         return res
-
 # 二分木の問題
 class BT_method(BST):
     def __init__(self, arr):
         super().__init__(arr)
 
-    def max_in_binary_tree(self):
-        root_val = self.root.data
+    def max_in_binary_tree(self, node, temp_max):
+        """実装は親と子の関係で最大値を示す
+        traversしながらLIFOして、大きい値を残していっても同じ。
+        順探索でtraversしながら最大値を覚えておくのと同じこと"""
+        if node is not None:
+            temp_root_val = node.data
+            left_val = self.max_in_binary_tree(node.left, temp_max)
+            right_val = self.max_in_binary_tree(node.right, temp_max)
 
+            temp_max = max(temp_root_val, left_val, right_val, temp_max)
 
+        return temp_max
 
+    def find_val(self, node, val, flag=False):
+        if node != None:
+            if node.data == val:
+                return True
 
+            else:
+                flag_left = self.find_val(node.left, val) #再帰の結果をreturnで返しているので変数で受け取る
+                flag_right = self.find_val(node.right, val)
+            
+                if flag_left or flag_right:
+                    return True
+
+        return False
 
 # BSTクラス内で使用する再帰関数
 # 与えられたの順にノードに追加していく
@@ -123,13 +150,31 @@ print(ins.preoder_traversal(ins.root, []))
 
 print('--------------------------')
 print('start inoder traversal')
-ins.inoder_traversal(ins.root, [])
+print(ins.inoder_traversal(ins.root, []))
 
 print('--------------------------')
 print('start postoder traversal')
-ins.postorder_traversal(ins.root, [])
+print(ins.postorder_traversal(ins.root, []))
 
 print('--------------------------')
 print('start level order traversal')
-ins.level_order_traversal(ins.root, [])
+print(ins.level_order_traversal([]))
 
+# 二分木の問題6.6.7
+print('=====================================')
+
+ins2 = BT_method(range(1,16))
+print('--------------------------')
+print('find max')
+print(ins2.max_in_binary_tree(ins2.root, 0))
+print('--------------------------')
+print('find value')
+print('looking for 7', ins2.find_val(ins2.root, 7))
+print('looking for 17', ins2.find_val(ins2.root, 17))
+
+#6-5 insert element
+
+#6-6 search size
+
+# 次は6.7N分木
+# 次は6.112分探索木
