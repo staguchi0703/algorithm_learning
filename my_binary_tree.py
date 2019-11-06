@@ -126,6 +126,15 @@ class BT_method(BST):
 
         return False
 
+
+    def size(self, node, cnt):
+        if node:
+            cnt += 1
+        # nodeの枝がNoneになったときの処理
+        return self.size(node.left, cnt) + self.size(node.right, self.size(node.left, cnt))
+
+        
+
 # BSTクラス内で使用する再帰関数
 # 与えられたの順にノードに追加していく
 def _insert(temp_node, data): #とあるノードに対して左枝と右枝へ条件分岐しながら再帰で進んで、treeの末端に到達したらノードを生成する
@@ -172,9 +181,11 @@ print('find value')
 print('looking for 7', ins2.find_val(ins2.root, 7))
 print('looking for 17', ins2.find_val(ins2.root, 17))
 
-#6-5 insert element
 
 #6-6 search size
+print('--------------------------')
+print('ditect node size')
+print(ins2.size(ins2.root, 0))
 
 # 次は6.7N分木
 # 次は6.112分探索木
