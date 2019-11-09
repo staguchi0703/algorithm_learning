@@ -22,42 +22,45 @@ class BST:
             self.root = Node(data) # Node()インスタンスを生成して代入する
             print(self.root.data)
             
+            
         else:
-            flag = True
-            queue = [self.root]
             level = 1
-            while flag:
+            flag = True
+            next_queue = [self.root] #初回のqueueを作成
+            while flag:   #flagは要素が全てNoneのときFalseになる
+                temp_queue, next_queue = next_queue, []
                 level += 1
-                temp_list, queue = queue, []
 
-                for i, node in enumerate(temp_list):
-                    
+                for node in temp_queue:
+                    # 左分木
+                    # 現在nodeのchiled nodeを次回操作のqueueに加えていく
                     if node.left is not None:
-                        queue.append(node.left)
-                    if node.right is not None:
-                        queue.append(node.right)
-
-                    if node.left is None:
-                        node.left = Node(data)
-                        queue.append(node.left)
-                        print('inseting level {}'.format(level))
-                        print('inserting {}th block'.format(i))
-                        flag = False
-
-                    elif node.right is None:
-                        node.right = Node(data)
-                        queue.append(node.right)
-                        print('inseting level {}'.format(level))
-                        print('inserting {}th block'.format(i))
-                        flag = False
+                        next_queue.append(node.left)
+                    # child nodeにNoneが見つかったときには新たにdataを使ってnodeを生成する
                     else:
-                        if not any(queue):
-                            temp_list[0].left = Node(data)
-                            print('inseting level {}'.format(level))
-                            print('inserting {}th block'.format(0))
-                            flag = False
-                # insertを要修正　for loop中のinsertする場所がおかしい
+                        node.left = Node(data)
+                        print('In level {}, {} is inseted'.format(level, data))
+                        return 
+                        """
+                        （AA）
+                        dataをnodeに追加したらこの回のinsertは終了する
+                        ここはfor < while < insert methodの中なのでreturnを使って一発でメソッドを終了させる 
+                        """
 
+                    # 右分木
+                    # 現在nodeのchiled nodeを次回操作のqueueに加えていく
+                    if node.right is not None:
+                        next_queue.append(node.right)
+                    # child nodeにNoneが見つかったときには新たにdataを使ってnodeを生成する
+                    else:
+                        node.right = Node(data)
+                        print('In level {}, {} is inseted'.format(level, data))
+                        return
+                        """
+                        （AA）参照
+                        """
+
+                flag = any(next_queue)
 
 
 
@@ -246,7 +249,7 @@ class BT_method(BST):
 # # 二分木の問題6.6.7
 # print('=====================================')
 
-ins2 = BT_method(range(1,7))
+ins2 = BT_method(range(1,16))
 # print('--------------------------')
 # print('find max')
 # print(ins2.max_in_binary_tree(ins2.root, 0))
