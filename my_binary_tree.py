@@ -39,6 +39,7 @@ class BST:
                     else:
                         node.left = Node(data)
                         queue.append(node.left)
+                        print('In level {}, {} is inseted'.format(level, data))
 
                     # 右分木
                     # 現在nodeのchiled nodeを次回操作のqueueに加えていく
@@ -48,6 +49,9 @@ class BST:
                     else:
                         node.right = Node(data)
                         queue.append(node.right)
+                        print('In level {}, {} is inseted'.format(level, data))
+
+                flag = any(queue)
 
 
 
@@ -120,8 +124,6 @@ class BT_method(BST):
 
     def max_in_binary_tree(self):
         root_val = self.root.data
-
-            temp_max = max(temp_root_val, left_val, right_val, temp_max)
 
 
 ins = BST(range(1,16))
