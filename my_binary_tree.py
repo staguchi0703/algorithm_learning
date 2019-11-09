@@ -10,9 +10,8 @@ class BST:
     """ user difine data structure BST """
     def __init__(self, arr):
         self.root = None # 今後の処理の基準にするために空のrootを作成する
-
+ 
         for inserted_node_data in arr: #リストに格納されているノードの値を順次挿入する処理
-            print('....')
             print('try inserting ', inserted_node_data)
             self.insert(inserted_node_data)
 
@@ -21,43 +20,34 @@ class BST:
             print('Root node is ....')
             self.root = Node(data) # Node()インスタンスを生成して代入する
             print(self.root.data)
-            
-        else:
-            flag = True
-            queue = [self.root]
-            level = 1
-            while flag:
-                level += 1
-                temp_list, queue = queue, []
 
-                for i, node in enumerate(temp_list):
-                    
+        else:
+            level = 1
+            queue = [self.root] # 最初のqueueにrootを挿入
+            flag = True
+
+            while flag:   #flagは要素が全てNoneのときFalseになる
+                temp_queue, queue = queue, []
+                level += 1
+
+                for node in queue:
+                    # 左分木
+                    # 現在nodeのchiled nodeを次回操作のqueueに加えていく
                     if node.left is not None:
                         queue.append(node.left)
-                    if node.right is not None:
-                        queue.append(node.right)
-
-                    if node.left is None:
+                    # child nodeにNoneが見つかったときには新たにdataを使ってnodeを生成する
+                    else:
                         node.left = Node(data)
                         queue.append(node.left)
-                        print('inseting level {}'.format(level))
-                        print('inserting {}th block'.format(i))
-                        flag = False
 
-                    elif node.right is None:
+                    # 右分木
+                    # 現在nodeのchiled nodeを次回操作のqueueに加えていく
+                    if node.right is not None:
+                        queue.append(node.right)
+                    # child nodeにNoneが見つかったときには新たにdataを使ってnodeを生成する
+                    else:
                         node.right = Node(data)
                         queue.append(node.right)
-                        print('inseting level {}'.format(level))
-                        print('inserting {}th block'.format(i))
-                        flag = False
-                    else:
-                        if not any(queue):
-                            temp_list[0].left = Node(data)
-                            print('inseting level {}'.format(level))
-                            print('inserting {}th block'.format(0))
-                            flag = False
-                # insertを要修正　for loop中のinsertする場所がおかしい
-
 
 
 
@@ -95,183 +85,63 @@ class BST:
         
             self.postorder_traversal(node.left, res)
             self.postorder_traversal(node.right, res)
-            print('queue', node.data)
+            print(node.data)
             res.append(node.data)
         return res
 
-    def level_order_traversal(self, queue, res= []):
+    def level_order_traversal(self, res, upper_node_list=[], level = 0):
 
-        if queue == [] :
+        if upper_node_list is self.root :
             # it's root
-            print('root', self.root.data)
+            print(self.root.data)
             res.append(self.root.data)
-            queue.append(self.root)
+            level += 1
+            upper_node_list = [self.root]
 
+            if level != 0:
+                raise ValueError('Inital node is geven as root. But level you set isn\'t 0.')
         else:
-            # このlevelのノード は引数のqueueだからforで回す
-            temp_list, queue = queue, []
-            not_none_cnt = 0
-
-            for item in temp_list:
-                if item.left is not None:
-                    res.append(item.left.data)
-                    print(item.left.data)
-                    queue.append(item.left)
-                    not_none_cnt += 1
-
-                if item.right is not None:
-                    res.append(item.right.data)
-                    print(item.right.data)
-                    queue.append(item.right)
-                    not_none_cnt += 1
-            
-            if not_none_cnt == 0:
-                return #最後にこの関数を呼び出したところに戻る
-            
-        self.level_order_traversal(queue, res)
+            upper_node_list = []
+            # このlevelのノードを書き出す
+            for item in upper_node_list:
+                print(item.left)
+                res.append(item.left)
+                upper_node_list.append(item.left)
+                print(item.right)
+                res.append(item.right)
+                upper_node_list.append(item.right)
 
         return res
-
-
 
 # 二分木の問題
 class BT_method(BST):
     def __init__(self, arr):
         super().__init__(arr)
 
-    def max_in_binary_tree(self, node, temp_max):
-        """実装は親と子の関係で最大値を示す
-        traversしながらLIFOして、大きい値を残していっても同じ。
-        順探索でtraversしながら最大値を覚えておくのと同じこと"""
-        if node is not None:
-            temp_root_val = node.data
-            left_val = self.max_in_binary_tree(node.left, temp_max)
-            right_val = self.max_in_binary_tree(node.right, temp_max)
+    def max_in_binary_tree(self):
+        root_val = self.root.data
 
             temp_max = max(temp_root_val, left_val, right_val, temp_max)
 
-        return temp_max
 
-    def find_val(self, node, val, flag=False):
-        if node != None:
-            if node.data == val:
-                return True
-
-            else:
-                flag_left = self.find_val(node.left, val) #再帰の結果をreturnで返しているので変数で受け取る
-                flag_right = self.find_val(node.right, val)
-            
-                if flag_left or flag_right:
-                    return True
-
-        return False
+ins = BST(range(1,16))
 
 
-    def size(self, node):
-        if node is None: #nodeがNoneのところで数え上げを終了
-            return 0 #0を返せば数え上げされない
-        else:
-            left_cnt = self.size(node.left)
-            right_cnt = self.size(node.right)
+# TODO 探索の方法を確認して実装する
+print('--------------------------')
+print('start preoder traversal')
+print(ins.preoder_traversal(ins.root, []))
 
-            return 1 + left_cnt + right_cnt #自分（not None）が１と左右木中の数（仮想の探索を再帰関数で実現）
+print('--------------------------')
+print('start inoder traversal')
+ins.inoder_traversal(ins.root, [])
 
-
-    def hight(self, level=0):
-        flag = True
-        queue = [self.root]
-
-        while flag:
-            level += 1
-            temp_list, queue = queue, []
-            for node in temp_list:
-                if node.left is not None:
-                    queue.append(node.left)
-                if node.right is not None:
-                    queue.append(node.right)
-
-
-            flag = any(queue)
-
-        return level
-
-
-
-
-    # def highest_node(self, queue=[]):
-
-    #     if queue == [] :
-    #         queue.append(self.root)
-
-    #     else:
-    #         # このlevelのノード は引数のqueueだからforで回す
-    #         temp_list , queue = queue, []
-    #         not_none_cnt = 0
-
-    #         for item in temp_list:
-    #             if item.left is not None:
-    #                 queue.append(item.left)
-    #                 not_none_cnt += 1
-
-    #             if item.right is not None:
-    #                 queue.append(item.right)
-    #                 not_none_cnt += 1
-            
-    #         if not_none_cnt == 0:
-    #             return
-            
-    #     self.highest_node(queue)
-    #     return 
-
-# ins = BST(range(1,16))
-
-
-# # TODO 探索の方法を確認して実装する
-# print('--------------------------')
-# print('start preoder traversal')
-# print(ins.preoder_traversal(ins.root, []))
-
-# print('--------------------------')
-# print('start inoder traversal')
-# print(ins.inoder_traversal(ins.root, []))
-
-# print('--------------------------')
-# print('start postoder traversal')
-# print(ins.postorder_traversal(ins.root, []))
+print('--------------------------')
+print('start postoder traversal')
+ins.postorder_traversal(ins.root, [])
 
 # print('--------------------------')
 # print('start level order traversal')
-# print(ins.level_order_traversal([]))
-
-# # 二分木の問題6.6.7
-# print('=====================================')
-
-ins2 = BT_method(range(1,7))
-# print('--------------------------')
-# print('find max')
-# print(ins2.max_in_binary_tree(ins2.root, 0))
-# print('--------------------------')
-# print('find value')
-# print('looking for 7', ins2.find_val(ins2.root, 7))
-# print('looking for 17', ins2.find_val(ins2.root, 17))
+# ins.level_order_traversal(ins.root, [])
 
 
-#6-6 search size
-# print('--------------------------')
-# print('detect node size')
-# print(ins2.size(ins2.root))
-
-#6-10 search hight
-print('--------------------------')
-print('detect node hight')
-print(ins2.hight())
-
-#6-12 highest node
-# print('--------------------------')
-# print('detect highest node')
-# print(ins2.highest_node())
-
-
-
-# 次は6.7N分木
-# 次は6.112分探索木
