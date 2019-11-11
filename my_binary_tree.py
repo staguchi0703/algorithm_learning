@@ -6,8 +6,8 @@ class Node:
         self.left = None
         self.right = None
 # %%
-class BST:
-    """ user difine data structure BST """
+class BinaryTree:
+    """ user difine data structure BinaryTree """
     def __init__(self, arr):
         self.root = None # 今後の処理の基準にするために空のrootを作成する
 
@@ -118,13 +118,13 @@ class BST:
             for item in temp_list:
                 if item.left is not None:
                     res.append(item.left.data)
-                    print(item.left.data)
+                    print('queue', item.left.data)
                     queue.append(item.left)
                     not_none_cnt += 1
 
                 if item.right is not None:
                     res.append(item.right.data)
-                    print(item.right.data)
+                    print('queue', item.right.data)
                     queue.append(item.right)
                     not_none_cnt += 1
             
@@ -138,7 +138,7 @@ class BST:
 
 
 # 二分木の問題
-class BT_method(BST):
+class BT_method(BinaryTree):
     def __init__(self, arr):
         super().__init__(arr)
 
@@ -201,32 +201,7 @@ class BT_method(BST):
 
 
 
-    # def highest_node(self, queue=[]):
-
-    #     if queue == [] :
-    #         queue.append(self.root)
-
-    #     else:
-    #         # このlevelのノード は引数のqueueだからforで回す
-    #         temp_list , queue = queue, []
-    #         not_none_cnt = 0
-
-    #         for item in temp_list:
-    #             if item.left is not None:
-    #                 queue.append(item.left)
-    #                 not_none_cnt += 1
-
-    #             if item.right is not None:
-    #                 queue.append(item.right)
-    #                 not_none_cnt += 1
-            
-    #         if not_none_cnt == 0:
-    #             return
-            
-    #     self.highest_node(queue)
-    #     return 
-
-# ins = BST(range(1,16))
+# ins = BinaryTree(range(1,16))
 
 
 # # TODO 探索の方法を確認して実装する
@@ -250,31 +225,25 @@ class BT_method(BST):
 # print('=====================================')
 
 ins2 = BT_method(range(1,16))
-# print('--------------------------')
-# print('find max')
-# print(ins2.max_in_binary_tree(ins2.root, 0))
-# print('--------------------------')
-# print('find value')
-# print('looking for 7', ins2.find_val(ins2.root, 7))
-# print('looking for 17', ins2.find_val(ins2.root, 17))
+print('--------------------------')
+print('find max')
+print(ins2.max_in_binary_tree(ins2.root, 0))
+print('--------------------------')
+print('find value')
+print('looking for 7', ins2.find_val(ins2.root, 7))
+print('looking for 17', ins2.find_val(ins2.root, 17))
 
 
 #6-6 search size
-# print('--------------------------')
-# print('detect node size')
-# print(ins2.size(ins2.root))
+print('--------------------------')
+print('detect node size')
+print(ins2.size(ins2.root))
 
-#6-10 search hight
+# 6-10 search hight
 print('--------------------------')
 print('detect node hight')
 print(ins2.hight())
 
-#6-12 highest node
-# print('--------------------------')
-# print('detect highest node')
-# print(ins2.highest_node())
-
-
 
 # 次は6.7N分木
-# 次は6.112分探索木
+# 次は6.11 2分探索木
