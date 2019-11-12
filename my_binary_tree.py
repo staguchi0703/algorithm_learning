@@ -201,7 +201,7 @@ class BT_method(BinaryTree):
 
 
 
-# ins = BinaryTree(range(1,16))
+ins = BinaryTree(range(1,16))
 
 
 # # TODO 探索の方法を確認して実装する
@@ -217,33 +217,29 @@ class BT_method(BinaryTree):
 # print('start postoder traversal')
 # print(ins.postorder_traversal(ins.root, []))
 
-# print('--------------------------')
-# print('start level order traversal')
-# print(ins.level_order_traversal([]))
+print('--------------------------')
+print('start level order traversal')
+print(ins.level_order_traversal([]))
 
 # # 二分木の問題6.6.7
 # print('=====================================')
 
-ins2 = BT_method(range(1,16))
-print('--------------------------')
-print('find max')
-print(ins2.max_in_binary_tree(ins2.root, 0))
-print('--------------------------')
-print('find value')
-print('looking for 7', ins2.find_val(ins2.root, 7))
-print('looking for 17', ins2.find_val(ins2.root, 17))
+# ins2 = BT_method(range(1,16))
+# print('--------------------------')
+# print('find max')
+# print(ins2.max_in_binary_tree(ins2.root, 0))
+# print('--------------------------')
+# print('find value')
+# print('looking for 7', ins2.find_val(ins2.root, 7))
+# print('looking for 17', ins2.find_val(ins2.root, 17))
 
 
-#6-6 search size
-print('--------------------------')
-print('detect node size')
-print(ins2.size(ins2.root))
+# #6-6 search size
+# print('--------------------------')
+# print('detect node size')
+# print(ins2.size(ins2.root))
 
-# 6-10 search hight
-print('--------------------------')
-print('detect node hight')
-print(ins2.hight())
-
-
-# 次は6.7N分木
-# 次は6.11 2分探索木
+# # 6-10 search hight
+# print('--------------------------')
+# print('detect node hight')
+# print(ins2.hight())
