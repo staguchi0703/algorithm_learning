@@ -40,12 +40,12 @@ class BinaryTree:
                     else:
                         node.left = Node(data)
                         print('In level {}, {} is inseted'.format(level, data))
-                        return 
                         """
                         （AA）
                         dataをnodeに追加したらこの回のinsertは終了する
                         ここはfor < while < insert methodの中なのでreturnを使って一発でメソッドを終了させる 
                         """
+                        return 
 
                     # 右分木
                     # 現在nodeのchiled nodeを次回操作のqueueに加えていく
@@ -55,10 +55,10 @@ class BinaryTree:
                     else:
                         node.right = Node(data)
                         print('In level {}, {} is inseted'.format(level, data))
-                        return
                         """
                         （AA）参照
                         """
+                        return
 
                 flag = any(next_queue)
 
@@ -137,7 +137,7 @@ class BinaryTree:
 
 
 
-# 二分木の問題
+# 二分木のメソッド
 class BT_method(BinaryTree):
     def __init__(self, arr):
         super().__init__(arr)
@@ -198,6 +198,15 @@ class BT_method(BinaryTree):
 
         return level
 
+    def inoder_sort(self):
+        pass
+
+    def disorder_sort(self, parameter_list):
+        pass
+
+    
+
+
 
 
 
@@ -239,7 +248,4 @@ print(ins.level_order_traversal([]))
 # print('detect node size')
 # print(ins2.size(ins2.root))
 
-# # 6-10 search hight
-# print('--------------------------')
-# print('detect node hight')
-# print(ins2.hight())
+# スワップ
