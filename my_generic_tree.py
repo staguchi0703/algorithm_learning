@@ -56,29 +56,16 @@ class Generic_tree:
     def level_order_traversal(self, node, res= []):
 
         # 二分木化してしまっているので、レベルは右にいった高さで表現する必要あり
-        # 要修正
-        # insertも間違っているかも
-        
-        flag = True
-        next_queue = [self.root] #初回のqueueを作成
-        level = 1
+        # genericのlevel oder traverse　だけどやってることはpreoder traverse
+        # まず左から探索（≒sibling）次に階層
 
-        print('root', self.root.data)
-        while flag:
-            temp_queue, next_queue = next_queue, []
-            for node in temp_queue:
-                if node.nextsibling is not None:
-                    print('level',level ,'  nextsibling', node.nextsibling.data)
-                    next_queue.append(node.nextsibling)
+        if node is None:
+            return
 
-            for node in temp_queue:
-                if node.firstchild is not None:
-                    level += 1
-                    print('level',level ,'  firstchild', node.firstchild.data)
-                    next_queue.append(node.firstchild)
-
-            flag = any(next_queue)
-
+        res.append(node.data)
+        self.level_order_traversal(node.nextsibling, res)
+        self.level_order_traversal(node.firstchild, res)
+        # どっちから来たかフラグを持てば表現できそう
         return res
 
             
@@ -92,6 +79,6 @@ node_arr =[
             [[11, 16], [11, 17]]
 ]
 
-ins = Generic_tree(node_arr)
+ins_generic = Generic_tree(node_arr)
 
-print(ins.level_order_traversal([]))
+print(ins_generic.level_order_traversal(ins_generic.root))
