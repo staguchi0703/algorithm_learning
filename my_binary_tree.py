@@ -248,4 +248,4 @@ print(ins.level_order_traversal([]))
 # print('detect node size')
 # print(ins2.size(ins2.root))
 
-# スワップ
+# TODO sortを実装する
