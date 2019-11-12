@@ -137,7 +137,7 @@ class BinaryTree:
 
 
 
-# 二分木の問題
+# 二分木のメソッド
 class BT_method(BinaryTree):
     def __init__(self, arr):
         super().__init__(arr)
@@ -198,6 +198,15 @@ class BT_method(BinaryTree):
 
         return level
 
+    def inoder_sort(self):
+        pass
+
+    def disorder_sort(self, parameter_list):
+        pass
+
+    
+
+
 
 
 
@@ -245,5 +254,4 @@ print('detect node hight')
 print(ins2.hight())
 
 
-# 次は6.7N分木
-# 次は6.11 2分探索木
+# スワップ
