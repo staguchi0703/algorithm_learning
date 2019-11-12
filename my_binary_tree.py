@@ -40,12 +40,12 @@ class BinaryTree:
                     else:
                         node.left = Node(data)
                         print('In level {}, {} is inseted'.format(level, data))
-                        return 
                         """
                         （AA）
                         dataをnodeに追加したらこの回のinsertは終了する
                         ここはfor < while < insert methodの中なのでreturnを使って一発でメソッドを終了させる 
                         """
+                        return 
 
                     # 右分木
                     # 現在nodeのchiled nodeを次回操作のqueueに加えていく
@@ -55,10 +55,10 @@ class BinaryTree:
                     else:
                         node.right = Node(data)
                         print('In level {}, {} is inseted'.format(level, data))
-                        return
                         """
                         （AA）参照
                         """
+                        return
 
                 flag = any(next_queue)
 
