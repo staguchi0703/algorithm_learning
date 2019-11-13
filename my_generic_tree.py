@@ -1,8 +1,10 @@
-class Node:
+class Generic_tree_Node:
     def __init__(self, data):
         self.data = data
         self.firstchild = None
+        self.firstchild_flag = 1
         self.nextsibling = None
+        self.nextsibling_flag = 1
 
 class Generic_tree:
     def __init__(self, node_arr):
@@ -14,14 +16,14 @@ class Generic_tree:
 
     def insert(self, i, family):
         if self.root is None:
-            self.root = Node(family[0][0])
+            self.root = Generic_tree_Node(family[0][0])
 
 
             temp_node = self.root
             siblings = [contents[1] for contents in family]
 
             for sibling in siblings:
-                temp_node.nextsibling = Node(sibling)
+                temp_node.nextsibling = Generic_tree_Node(sibling)
                 temp_node = temp_node.nextsibling
 
         else:
@@ -41,32 +43,48 @@ class Generic_tree:
                         if node.firstchild is not None:
                             next_queue.append(node.firstchild)
                         if node.data == pairent:
-                            node.firstchild = Node(child)
+                            node.firstchild = Generic_tree_Node(child)
 
                             temp_node = node.firstchild
                             siblings = [contents[1] for contents in family]
 
                             for sibling in siblings:
-                                temp_node.nextsibling = Node(sibling)
+                                temp_node.nextsibling = Generic_tree_Node(sibling)
                                 temp_node = temp_node.nextsibling
 
                     flag = any(next_queue)
 
     
-    def level_order_traversal(self, node, res= []):
+    def thread_binary_tree(self, node, res= []):
 
         # 二分木化してしまっているので、レベルは右にいった高さで表現する必要あり
-        # genericのlevel oder traverse　だけどやってることはpreoder traverse
-        # まず左から探索（≒sibling）次に階層
+        # これを上手く扱う方法としてスレッド二分木を使用する
 
+        # dummy nodeの追加
+        self.dummy_node = Generic_tree_Node('Null')
+        self.dummy_node.nextsibling = self.root
+        # https://yottagin.com/?p=3423
+        self.dummy_node.firstchild = self.dummy_node.firstchild
+
+        # 走査の終了条件
         if node is None:
             return
-
+        
         res.append(node.data)
-        self.level_order_traversal(node.nextsibling, res)
-        self.level_order_traversal(node.firstchild, res)
-        # どっちから来たかフラグを持てば表現できそう
+
+        if node.nextsibling is not None:
+            self.thread_binary_tree(node.nextsibling, res)
+        else:
+            return
+
+        if node.firstchild is None:
+            self.thread_binary_tree(node.nextsibling, res)
+            self.thread_binary_tree(node.firstchild, res)    
+        else:
+            return
+
         return res
+
 
             
 #####
@@ -81,4 +99,4 @@ node_arr =[
 
 ins_generic = Generic_tree(node_arr)
 
-print(ins_generic.level_order_traversal(ins_generic.root))
+print(ins_generic.thread_binary_tree(ins_generic.root))
