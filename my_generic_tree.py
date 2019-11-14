@@ -6,8 +6,8 @@ class Generic_tree_Node:
     def __init__(self, data):
         # inorder thread binary tree
         self.data = data
-        self.firstchild = None
         self.nextsibling = None
+        self.firstchild = None
 
 # class Threaded_binary_tree_Node:
 #     def __init__(self, data):
@@ -24,17 +24,21 @@ class Generic_tree:
         self.root = None
         
         for i, family in enumerate(node_arr):
+            print('try to insert', family, 'in step ', i)
             self.insert(i, family)
 
 
     def insert(self, i, family):
         if self.root is None:
+            print('make root node')
             self.root = Generic_tree_Node(family[0][0])
+            print('make first child for root')
             self.root.firstchild = Generic_tree_Node(family[0][1])
 
             temp_node = self.root.firstchild
             siblings = [contents[1] for contents in family]
 
+            print('insert siblings to root.firstchild')
             for sibling in siblings:
                 temp_node.nextsibling = Generic_tree_Node(sibling)
                 temp_node = temp_node.nextsibling
@@ -49,22 +53,27 @@ class Generic_tree:
                 while flag:
                     temp_queue, next_queue = next_queue, []
                     for node in temp_queue:
+                       
                         if node.nextsibling is not None:
+                            print('insert siblings to ', node.data, 'for making queue')
                             next_queue.append(node.nextsibling)
                             
                         if node.firstchild is not None:
+                            print('insert firstchild to ', node.data, 'for making queue')
                             next_queue.append(node.firstchild)
 
                         if node.data == pairent:
+                            print('when you find pairent, insert ', node.data, ' to firstchild')
                             node.firstchild = Generic_tree_Node(child)
                             temp_node = node.firstchild
-                            siblings = [contents[1] for contents in family]
 
+                            print('insert sibling to ', node.data)
+                            siblings = [contents[1] for contents in family]
                             for sibling in siblings:
                                 temp_node.nextsibling = Generic_tree_Node(sibling)
                                 temp_node = temp_node.nextsibling
 
-                    if len(next_queue) >= 1:
+                    if len(next_queue) == 0:
                         flag = None
                 
 
