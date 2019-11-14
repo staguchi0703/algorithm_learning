@@ -8,7 +8,7 @@
 
 [Wiki pedia による二分木の解説](https://ja.wikipedia.org/wiki/%E6%9C%A8%E6%A7%8B%E9%80%A0_(%E3%83%87%E3%83%BC%E3%82%BF%E6%A7%8B%E9%80%A0))
 
-![二分木の図解](https://ja.wikipedia.org/wiki/%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB:Sorted_binary_tree.svg)
+![二分木の図解](https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Sorted_binary_tree.svg/250px-Sorted_binary_tree.svg.png)
 
 ## 目的
 * 二分木を学ぶことで、データ構造とアルゴリズムに対する理解を深めたい。
