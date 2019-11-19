@@ -79,7 +79,7 @@ arr = [random.randint(1, 100) for _ in range(12)]
 ins = BST(arr)
 print(arr)
 print(ins.find(ins.root, 4))
-print(ins.bst_min(ins.root))
+print(ins.bst_min(ins.root)) # TODO 直す
 ins.inoder_traverse(ins.root)
 
             
