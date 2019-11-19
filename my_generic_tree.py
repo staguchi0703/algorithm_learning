@@ -6,15 +6,6 @@ class Generic_tree_Node:
         self.nextsibling = None
         self.firstchild = None
 
-# class Threaded_binary_tree_Node:
-#     def __init__(self, data):
-#         # inorder thread binary tree
-#         self.data = data
-#         self.firstchild_flag = 0    #thread
-#         self.firstchild = None
-#         self.nextsibling_flag = 0   #thread
-#         self.nextsibling = None
-
 
 class Generic_tree:
     def __init__(self, node_arr):
@@ -29,7 +20,7 @@ class Generic_tree:
         if self.root is None:
             print('make root node')
             self.root = Generic_tree_Node(family[0][0])
-            print('make first child for root')
+            print('make first child　which is {} for root'.format(family[0][1]))
             self.root.firstchild = Generic_tree_Node(family[0][1])
 
             temp_node = self.root.firstchild
@@ -61,11 +52,11 @@ class Generic_tree:
                             next_queue.append(node.firstchild)
 
                         if node.data == pairent:
-                            print('when you find pairent, insert ', node.data, ' to firstchild')
+                            print('when you find {} which is pairent, insert '.format(node.data), child, ' as firstchild.')
                             node.firstchild = Generic_tree_Node(child)
                             temp_node = node.firstchild
 
-                            print('insert siblings to ', node.data)
+                            print('insert siblings to ', node.data, '.')
                             siblings = [contents[1] for contents in family[1:]] #family のfirstchildはsiblingから除く
                             for sibling in siblings:
                                 temp_node.nextsibling = Generic_tree_Node(sibling)
@@ -77,9 +68,6 @@ class Generic_tree:
                 
 
     def inorder_traverse(self, node):
-
-        # 二分木化してしまっているので、レベルは右にいった高さで表現する必要あり
-        # これを上手く扱う方法としてスレッド二分木を使用する
 
         # 走査の終了条件
         if node is None:
